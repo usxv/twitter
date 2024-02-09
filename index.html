@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./resources/icons/twitter.svg" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter</title>
+    <style>
+        * {
+            box-sizing: border-box !important;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+
+        }
+
+        textarea {
+            border: 4px solid grey;
+            border-radius: 0.8rem;
+            font-size: 1.1rem;
+            box-sizing: border-box;
+            padding: 0.5rem;
+            padding-bottom: 1rem;
+            outline: none;
+            text-align: left;
+            font-weight: 600;
+            transition: all 1s;
+            overflow-y: hidden;
+            resize: none;
+        }
+
+        textarea:focus {
+            border: 4px solid #1EA1F2;
+        }
+
+        .btn-primary {
+            margin-top: 0.8rem;
+            border: none;
+            background-color: #1EA1F2;
+            color: white;
+            border-radius: 3rem;
+            width: 7rem;
+            height: 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d9ae7;
+            cursor: pointer;
+        }
+
+        .counter {
+            width: 10rem;
+            height: 2rem;
+            margin-top: 1rem;
+            display: none;
+            outline: none;
+            font-weight: bold;
+            font-size: large;
+            cursor: default;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bold {
+            font-weight: bold;
+
+        }
+
+        .main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .txt-left-forced {
+            margin-left: -15rem;
+        }
+
+        circle {
+            stroke-dasharray: 120;
+            /*2 * 3.14159* radius */
+            stroke-dashoffset: 120;
+            /*Target this property with js in order for the circle to fill with each character and subtract 120 - inputbox.length */
+        }
+
+        .charcounter {
+            height: 60px;
+            width: 60px;
+            position: relative;
+            /* margin-top: 1rem; */
+            /* border: 2px solid; */
+            background-image: url('./resources/icons/circle.svg');
+            background-repeat: no-repeat;
+            background-size: 76%;
+            background-position-x: 50%;
+            background-position-y: 50%;
+            display: none;
+            /*COMMENT THIS TO SEE THE BLUE CIRCLE*/
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container2">
+            <h1>Home</h1>
+            <div class="form">
+                <textarea id="inBox" cols="30" rows="2" placeholder="What's happening?!" oninput="inputfn()"></textarea>
+                <div class="main">
+                    <button id="twBtn" class="btn-primary" onclick="">Tweet</button>
+                    <div class="charcounter" id="blueCircle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="19" stroke="#1d9ae7" stroke-width="8" fill="none"
+                                id="circleCounter" />
+                        </svg>
+                    </div>
+                    <!-- <input id="outBox" type="text" name="" class="counter"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        function inputfn() {
+            var inputBox = document.getElementById('inBox');
+            var inputBoxVal = document.getElementById('inBox').value;
+            var inBoxLen = document.getElementById('inBox').value.length;
+            var inBoxMaxLen = document.getElementById('inBox').value.slice(0, 119);
+            var blueC = document.getElementById('blueCircle');
+            var inBoxSh = inputBox.scrollHeight;
+            var circleMaxLen = 120;
+            var circleCounterx = circleMaxLen - inBoxLen;
+            if (inBoxLen > 0) {
+                blueC.style.display = "block";
+                // outBox.style.display = "block";
+                document.getElementById('inBox').value = inBoxMaxLen;
+                // outBox.value = inBoxLen + "/120";
+                document.getElementById('circleCounter').style.strokeDashoffset = circleCounterx;
+                // document.getElementById('tweetBtn').innerHTML = sh;  //FOR CHECKING THE SCROLL BAR HEIGHT
+            }
+            else if (inBoxLen == 0) {
+                // outBox.style.display = "none";
+                blueC.style.display = "none";
+                inputBox.rows = "2";
+                inBoxSh = "65";
+                blueC.style.strokeDashoffset = circleMaxLen;
+            }
+            if (inBoxLen < 40) {
+                inputBox.rows = "2";
+                inBoxSh = "65";
+            }
+            else if (inBoxLen < 80) {
+                inputBox.rows = "3";
+                inBoxSh = "65";
+            }
+            //IN CASE OF ELSE IF USE THE MAX VALUE FIRST ELSE IT WON"T WORK
+            if (inBoxSh > 148) {
+                inputBox.rows = "6";
+            } else if (inBoxSh > 107) {
+                inputBox.rows = "5";
+            } else if (inBoxSh > 86) {
+                inputBox.rows = "4";
+            } else if (inBoxSh > 66) {
+                inputBox.rows = "3";
+            }
+        }
+    </script>
+</body>
+
+</html>
